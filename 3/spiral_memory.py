@@ -1,11 +1,10 @@
 """ Find the distance to 1 """
 import math
-import numpy as np
 
 puzzle_input = 289326
-puzzle_input = 23
+#puzzle_input = 21
 
-def odd_wortel_vinden(data):
+def find_outer_layer(data):
     """ Find square number to create matrix """
     while True:
         wortel = math.sqrt(data)
@@ -17,8 +16,18 @@ def odd_wortel_vinden(data):
         else:
             data += 1
 
-odd_wrtl = int(odd_wortel_vinden(puzzle_input))
-print odd_wrtl
+def define_layers(outer_layer):
+    """ Define memory layers and their entries """
+    layer_dict = dict()
+    for layer in range(3, (outer_layer+1), 2):
+        layer_begin = ((layer-2)**2)+1 #begin of each layer is end of last layer
+        layer_end = layer**2
+        layer_dict[layer] = [layer_begin, layer_end]
+    return layer_dict
 
-a = np.arange(odd_wrtl**2).reshape(odd_wrtl,odd_wrtl)
-print a
+outer_layer = int(find_outer_layer(puzzle_input))
+print(outer_layer)
+
+all_layers = define_layers(outer_layer)
+print("Number of layers: {0}".format(len(all_layers)))
+print(all_layers)
